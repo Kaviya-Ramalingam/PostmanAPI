@@ -1,0 +1,1918 @@
+{
+	"info": {
+		"_postman_id": "cb01f83c-ad8c-48bf-aea8-64f96bc407aa",
+		"name": "BookStore_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27965449"
+	},
+	"item": [
+		{
+			"name": "[1]create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"pm.environment.set(\"variable_key\", \"variable_value\");",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var user_Id = pm.response.json().userID;",
+							"pm.environment.set(\"userId\", user_Id);",
+							"var userName = pm.response.json().username;",
+							"pm.environment.set(\"userName\", userName);",
+							"",
+							"pm.test(\"Response schema is valid\", function () {",
+							"    var schema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            userID: { type: \"string\" },",
+							"            username: { type: \"string\" },",
+							"            books: { type: \"array\" }",
+							"        },",
+							"        required: [\"userID\", \"username\", \"books\"],",
+							"    };",
+							"",
+							"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Response has the required fields - userID, username, and books\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.userID).to.exist;",
+							"    pm.expect(responseData.username).to.exist;",
+							"    pm.expect(responseData.books).to.exist;",
+							"});",
+							"",
+							"pm.test(\"Username is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+							"});",
+							"",
+							"pm.test(\"Books is an array\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.books).to.be.an('array');",
+							"});",
+							"",
+							"pm.test(\"UserID is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.userID).to.be.a('string').and.to.have.lengthOf.at.least(1, \"UserID should not be empty\");",
+							"});",
+							"",
+							"pm.test(\"Response Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"User ID is a valid UUID format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.userID).to.match(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Books array should not be null\", function () {",
+							"  const responseData = pm.response.json();",
+							"  pm.expect(responseData.books).to.not.be.null;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Username is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+							"});",
+							"",
+							"pm.test(\"Validate the userID and username combination is unique\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.have.property('userID').that.is.a('string');",
+							"    pm.expect(responseData).to.have.property('username').that.is.a('string');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"userName\" : \"TeamNumpy020**\",\n\"password\" : \"sdetNumpy@05\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Account/v1/User",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[1]create user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userName\" : \"TeamNumpy02**\",\n\"password\" : \"sdetNumpy@05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Account/v1/User",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"User"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 19:55:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "87"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"57-VnQOGLSg3BGBRLpan6vd3FsoZY0\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userID\": \"e4d6b640-d399-4cb6-bcd6-42e7c8fc34aa\",\n    \"username\": \"TeamNumpy02**\",\n    \"books\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "[2]Generate token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\",()=>{",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"var token = pm.response.json().token;",
+							"pm.environment.set(\"token\", token);",
+							"",
+							"pm.test(\"Validate the schema of the response body\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData).to.have.property('token');",
+							"  pm.expect(responseData.token).to.be.a('string');",
+							"  pm.expect(responseData).to.have.property('expires');",
+							"  pm.expect(responseData.expires).to.be.a('string');",
+							"  pm.expect(responseData).to.have.property('status');",
+							"  pm.expect(responseData.status).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Presence of required fields in the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.token).to.exist;",
+							"    pm.expect(responseData.expires).to.exist;",
+							"});",
+							"",
+							"// Test to validate the schema of the entire response body",
+							"pm.test(\"Schema validation for the entire response body\", function () {",
+							"  const schema = {",
+							"    type: \"object\",",
+							"    properties: {",
+							"      token: { type: \"string\" },",
+							"      expires: { type: \"string\" },",
+							"      status: { type: \"string\" }",
+							"    },",
+							"    required: [\"token\", \"expires\", \"status\"]",
+							"  };",
+							"  ",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const requestPayload = ",
+							" {",
+							"\"userName\" : pm.environment.get(\"userName\"),",
+							"\"password\" : \"sdetNumpy@05\"",
+							"}",
+							"",
+							"pm.collectionVariables.set(\"requestPayload\", JSON.stringify(requestPayload));",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{requestPayload}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/GenerateToken",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"GenerateToken"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[2]Generate token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{requestPayload}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Account/v1/GenerateToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"GenerateToken"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:22:35 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "285"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"11d-IQTJtkwSdZL1a9N3QwhxVmD1VFE\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlYW1OdW1weTAyKioiLCJwYXNzd29yZCI6InNkZXROdW1weUAwNSIsImlhdCI6MTc0MjI0Mjk1NH0.FP3XyI2hOG3Ha15pOfXc_FEgoIkw9-j74kZX_9Dt_3g\",\n    \"expires\": \"2025-03-24T20:22:34.714Z\",\n    \"status\": \"Success\",\n    \"result\": \"User authorized successfully.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "[4]authorized",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const requestPayload = ",
+							" {",
+							"\"userName\" : pm.environment.get(\"userName\"),",
+							"\"password\" : \"sdetNumpy@05\"",
+							"}",
+							"",
+							"pm.collectionVariables.set(\"requestPayload\", JSON.stringify(requestPayload));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\",()=>{",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is within an acceptable range\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has a valid JSON schema\", function () {",
+							"    pm.response.to.have.jsonSchema({",
+							"        \"type\": \"boolean\"",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{requestPayload}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Account/v1/Authorized",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"Authorized"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[4]authorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{requestPayload}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Account/v1/Authorized",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"Authorized"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:23:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "4"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4-X/5TO4MPCKAyY0ipFgr6/IraRNs\""
+						}
+					],
+					"cookie": [],
+					"body": "true"
+				}
+			]
+		},
+		{
+			"name": "[5]Get user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\",()=>{",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"User ID is not empty\", () => {",
+							"    pm.expect(pm.response.json().userId).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Response body has valid data types\", () => {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody.userId).to.be.a('string');",
+							"    pm.expect(responseBody.username).to.be.a('string');",
+							"   ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic VGVhbU51bXB5NTpzZGV0TnVtcHlAMDU="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlYW1OdW1weTUiLCJwYXNzd29yZCI6InNkZXROdW1weUAwNSIsImlhdCI6MTc0MTYxODA5Nn0.PmFSmQ7q8vOG33qEHQeIs2gvWXWNjvILYk4AHykIoj0"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/Account/v1/User/{{userId}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[5]Get user",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic VGVhbU51bXB5NTpzZGV0TnVtcHlAMDU="
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlYW1OdW1weTUiLCJwYXNzd29yZCI6InNkZXROdW1weUAwNSIsImlhdCI6MTc0MTYxODA5Nn0.PmFSmQ7q8vOG33qEHQeIs2gvWXWNjvILYk4AHykIoj0"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/Account/v1/User/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"User",
+								"{{userId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:26:38 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "88"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"58-2QyFcoh5zIICgpN/FtRHVT4823k\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": \"474232fb-e613-49fd-8ab0-9aa8cfb5dcb9\",\n    \"username\": \"TeamNumpy020**\",\n    \"books\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "[6]Get Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Stores the first ISBN from the response data in an environment variable",
+							"var jsonResponse = pm.response.json();",
+							"var isbn = jsonResponse.books[0].isbn;",
+							"pm.environment.set(\"first_isbn\", isbn);",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response content type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.books).to.be.an('array');",
+							"    ",
+							"    pm.expect(responseData.books[0].isbn).to.be.a('string');",
+							"    pm.expect(responseData.books[0].title).to.be.a('string');",
+							"    pm.expect(responseData.books[0].subTitle).to.be.a('string');",
+							"    pm.expect(responseData.books[0].author).to.be.a('string');",
+							"    pm.expect(responseData.books[0].publish_date).to.exist;",
+							"    pm.expect(responseData.books[0].publisher).to.be.a('string');",
+							"    pm.expect(responseData.books[0].pages).to.be.a('number');",
+							"    pm.expect(responseData.books[0].description).to.be.a('string');",
+							"    pm.expect(responseData.books[0].website).to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"ISBN is stored in an environment variable\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.books[0].isbn).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Presence of specific header in the response\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.exist;",
+							"});",
+							"// Store all the ISBNs from the response data in an environment variable",
+							"var jsonResponse = pm.response.json();",
+							"var allIsbns = jsonResponse.books.map(book => book.isbn);",
+							"var specificIsbn = allIsbns[1];",
+							"pm.environment.set(\"second_isbn\",specificIsbn);",
+							"var third_isbn = allIsbns[2];",
+							"pm.environment.set(\"third_isbn\",third_isbn)",
+							"var fourth_isbn = allIsbns[3];",
+							"pm.environment.set(\"fourth_isbn\",fourth_isbn)",
+							"pm.environment.set(\"all_isbns\", JSON.stringify(allIsbns));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/BookStore/v1/Books",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[6]Get Books",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:27:36 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "4514"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"11a2-8zfX++QwcgaCjSU6F8JP9fUd1tY\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"books\": [\n        {\n            \"isbn\": \"9781449325862\",\n            \"title\": \"Git Pocket Guide\",\n            \"subTitle\": \"A Working Introduction\",\n            \"author\": \"Richard E. Silverman\",\n            \"publish_date\": \"2020-06-04T08:48:39.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 234,\n            \"description\": \"This pocket guide is the perfect on-the-job companion to Git, the distributed version control system. It provides a compact, readable introduction to Git for new users, as well as a reference to common commands and procedures for those of you with Git exp\",\n            \"website\": \"http://chimera.labs.oreilly.com/books/1230000000561/index.html\"\n        },\n        {\n            \"isbn\": \"9781449331818\",\n            \"title\": \"Learning JavaScript Design Patterns\",\n            \"subTitle\": \"A JavaScript and jQuery Developer's Guide\",\n            \"author\": \"Addy Osmani\",\n            \"publish_date\": \"2020-06-04T09:11:40.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 254,\n            \"description\": \"With Learning JavaScript Design Patterns, you'll learn how to write beautiful, structured, and maintainable JavaScript by applying classical and modern design patterns to the language. If you want to keep your code efficient, more manageable, and up-to-da\",\n            \"website\": \"http://www.addyosmani.com/resources/essentialjsdesignpatterns/book/\"\n        },\n        {\n            \"isbn\": \"9781449337711\",\n            \"title\": \"Designing Evolvable Web APIs with ASP.NET\",\n            \"subTitle\": \"Harnessing the Power of the Web\",\n            \"author\": \"Glenn Block et al.\",\n            \"publish_date\": \"2020-06-04T09:12:43.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 238,\n            \"description\": \"Design and build Web APIs for a broad range of clients—including browsers and mobile devices—that can adapt to change over time. This practical, hands-on guide takes you through the theory and tools you need to build evolvable HTTP services with Microsoft\",\n            \"website\": \"http://chimera.labs.oreilly.com/books/1234000001708/index.html\"\n        },\n        {\n            \"isbn\": \"9781449365035\",\n            \"title\": \"Speaking JavaScript\",\n            \"subTitle\": \"An In-Depth Guide for Programmers\",\n            \"author\": \"Axel Rauschmayer\",\n            \"publish_date\": \"2014-02-01T00:00:00.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 460,\n            \"description\": \"Like it or not, JavaScript is everywhere these days-from browser to server to mobile-and now you, too, need to learn the language or dive deeper than you have. This concise book guides you into and through JavaScript, written by a veteran programmer who o\",\n            \"website\": \"http://speakingjs.com/\"\n        },\n        {\n            \"isbn\": \"9781491904244\",\n            \"title\": \"You Don't Know JS\",\n            \"subTitle\": \"ES6 & Beyond\",\n            \"author\": \"Kyle Simpson\",\n            \"publish_date\": \"2015-12-27T00:00:00.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 278,\n            \"description\": \"No matter how much experience you have with JavaScript, odds are you don’t fully understand the language. As part of the \\\\\\\"You Don’t Know JS\\\\\\\" series, this compact guide focuses on new features available in ECMAScript 6 (ES6), the latest version of the st\",\n            \"website\": \"https://github.com/getify/You-Dont-Know-JS/tree/master/es6%20&%20beyond\"\n        },\n        {\n            \"isbn\": \"9781491950296\",\n            \"title\": \"Programming JavaScript Applications\",\n            \"subTitle\": \"Robust Web Architecture with Node, HTML5, and Modern JS Libraries\",\n            \"author\": \"Eric Elliott\",\n            \"publish_date\": \"2014-07-01T00:00:00.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 254,\n            \"description\": \"Take advantage of JavaScript's power to build robust web-scale or enterprise applications that are easy to extend and maintain. By applying the design patterns outlined in this practical book, experienced JavaScript developers will learn how to write flex\",\n            \"website\": \"http://chimera.labs.oreilly.com/books/1234000000262/index.html\"\n        },\n        {\n            \"isbn\": \"9781593275846\",\n            \"title\": \"Eloquent JavaScript, Second Edition\",\n            \"subTitle\": \"A Modern Introduction to Programming\",\n            \"author\": \"Marijn Haverbeke\",\n            \"publish_date\": \"2014-12-14T00:00:00.000Z\",\n            \"publisher\": \"No Starch Press\",\n            \"pages\": 472,\n            \"description\": \"JavaScript lies at the heart of almost every modern web application, from social apps to the newest browser-based games. Though simple for beginners to pick up and play with, JavaScript is a flexible, complex language that you can use to build full-scale \",\n            \"website\": \"http://eloquentjavascript.net/\"\n        },\n        {\n            \"isbn\": \"9781593277574\",\n            \"title\": \"Understanding ECMAScript 6\",\n            \"subTitle\": \"The Definitive Guide for JavaScript Developers\",\n            \"author\": \"Nicholas C. Zakas\",\n            \"publish_date\": \"2016-09-03T00:00:00.000Z\",\n            \"publisher\": \"No Starch Press\",\n            \"pages\": 352,\n            \"description\": \"ECMAScript 6 represents the biggest update to the core of JavaScript in the history of the language. In Understanding ECMAScript 6, expert developer Nicholas C. Zakas provides a complete guide to the object types, syntax, and other exciting changes that E\",\n            \"website\": \"https://leanpub.com/understandinges6/read\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "[7]get book by isbn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response content type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.isbn).to.be.a('string');",
+							"    pm.expect(responseData.title).to.be.a('string');",
+							"    pm.expect(responseData.subTitle).to.be.a('string');",
+							"    pm.expect(responseData.author).to.be.a('string');",
+							"    pm.expect(responseData.publish_date).to.exist;",
+							"    pm.expect(responseData.publisher).to.be.a('string');",
+							"    pm.expect(responseData.pages).to.be.a('number');",
+							"    pm.expect(responseData.description).to.be.a('string');",
+							"    pm.expect(responseData.website).to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"ISBN is stored in an environment variable\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.isbn).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Presence of specific header in the response\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.exist;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Book?ISBN={{first_isbn}}",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Book"
+					],
+					"query": [
+						{
+							"key": "ISBN",
+							"value": "{{first_isbn}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[7]get book by isbn",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Book?ISBN={{first_isbn}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Book"
+							],
+							"query": [
+								{
+									"key": "ISBN",
+									"value": "{{first_isbn}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:27:59 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "549"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"225-6wegpsdSbs3Zjpo/5fzJQey1dRQ\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"isbn\": \"9781449325862\",\n    \"title\": \"Git Pocket Guide\",\n    \"subTitle\": \"A Working Introduction\",\n    \"author\": \"Richard E. Silverman\",\n    \"publish_date\": \"2020-06-04T08:48:39.000Z\",\n    \"publisher\": \"O'Reilly Media\",\n    \"pages\": 234,\n    \"description\": \"This pocket guide is the perfect on-the-job companion to Git, the distributed version control system. It provides a compact, readable introduction to Git for new users, as well as a reference to common commands and procedures for those of you with Git exp\",\n    \"website\": \"http://chimera.labs.oreilly.com/books/1230000000561/index.html\"\n}"
+				}
+			]
+		},
+		{
+			"name": "[8]Add book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed the failing test for schema validation by defining 'ajv'",
+							"const Ajv = require('ajv');",
+							"const ajv = new Ajv();",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Validating the structure of the response body\", function () {",
+							"    pm.expect(pm.response.json()).to.have.property('books');",
+							"    pm.expect(pm.response.json().books).to.be.an('array');",
+							"    pm.expect(pm.response.json().books[0]).to.have.property('isbn');",
+							"    pm.expect(pm.response.json().books[0].isbn).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Schema validation for the response body\", function () {",
+							"    const schema = {",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"            \"books\": {",
+							"                \"type\": \"array\",",
+							"                \"items\": {",
+							"                    \"type\": \"object\",",
+							"                    \"properties\": {",
+							"                        \"isbn\": { \"type\": \"string\" }",
+							"                    },",
+							"                    \"required\": [\"isbn\"]",
+							"                }",
+							"            }",
+							"        },",
+							"        \"required\": [\"books\"]",
+							"    };",
+							"    pm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"{{first_isbn}}\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/BookStore/v1/Books",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[8]Add book",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"{{first_isbn}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:28:48 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "36"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"24-2U7DK3nFgERO/LjA8mW3SiqYyFc\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"books\": [\n        {\n            \"isbn\": \"9781449325862\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "[9]Add Multiple book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate the status code",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"// Validate the response time",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"// Perform schema validation of the response body",
+							"pm.test('Schema is valid', function () {",
+							"    const schema = {",
+							"        ",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"books\": {",
+							"      \"type\": \"array\",",
+							"      \"items\": [",
+							"        {",
+							"          \"type\": \"object\",",
+							"          \"properties\": {",
+							"            \"isbn\": {",
+							"              \"type\": \"string\"",
+							"            }",
+							"          },",
+							"          \"required\": [",
+							"            \"isbn\"",
+							"          ]",
+							"        },",
+							"        {",
+							"          \"type\": \"object\",",
+							"          \"properties\": {",
+							"            \"isbn\": {",
+							"              \"type\": \"string\"",
+							"            }",
+							"          },",
+							"          \"required\": [",
+							"            \"isbn\"",
+							"          ]",
+							"        }",
+							"      ]",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"books\"",
+							"  ]",
+							"}",
+							"});",
+							"",
+							"// Validate the data types in the response body",
+							"pm.test(\"Validate JSON data type\", function() {",
+							"    // Parse the response JSON",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    // Validate that the response is an array of books",
+							"    pm.expect(jsonData.books).to.be.an('array');",
+							"",
+							"    // Validate each book has an ISBN as a string",
+							"    jsonData.books.forEach(function(book) {",
+							"        pm.expect(book).to.have.property('isbn').that.is.a('string');",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"{{third_isbn}}\"\n    },\n    {\n      \"isbn\": \"{{second_isbn}}\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/BookStore/v1/Books",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[9]Add Multiple book",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"{{third_isbn}}\"\n    },\n    {\n      \"isbn\": \"{{second_isbn}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:29:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "61"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3d-aLJAyDDF0rf0ecR2PaOI6Coy4nw\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"books\": [\n        {\n            \"isbn\": \"9781449337711\"\n        },\n        {\n            \"isbn\": \"9781449331818\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "[10]update book by isbn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.books).to.be.an('array');",
+							"    ",
+							"    pm.expect(responseData.books[0].isbn).to.be.a('string');",
+							"    pm.expect(responseData.books[0].title).to.be.a('string');",
+							"    pm.expect(responseData.books[0].subTitle).to.be.a('string');",
+							"    pm.expect(responseData.books[0].author).to.be.a('string');",
+							"    pm.expect(responseData.books[0].publish_date).to.exist;",
+							"    pm.expect(responseData.books[0].publisher).to.be.a('string');",
+							"    pm.expect(responseData.books[0].pages).to.be.a('number');",
+							"    pm.expect(responseData.books[0].description).to.be.a('string');",
+							"    pm.expect(responseData.books[0].website).to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"ISBN is stored in an environment variable\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.books[0].isbn).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Presence of specific header in the response\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.exist;",
+							"});",
+							"",
+							"pm.test(\"Schema validation for response body\", function () {",
+							"    const schema = {",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"            \"books\": {",
+							"                \"type\": \"array\",",
+							"                \"items\": {",
+							"                    \"type\": \"object\",",
+							"                    \"properties\": {",
+							"                        \"isbn\": { \"type\": \"string\" },",
+							"                        \"title\": { \"type\": \"string\" },",
+							"                        \"subTitle\": { \"type\": \"string\" },",
+							"                        \"author\": { \"type\": \"string\" },",
+							"                        \"publish_date\": { \"type\": \"string\" },",
+							"                        \"publisher\": { \"type\": \"string\" },",
+							"                        \"pages\": { \"type\": \"number\" },",
+							"                        \"description\": { \"type\": \"string\" },",
+							"                        \"website\": { \"type\": \"string\" }",
+							"                    },",
+							"                    \"required\": [\"isbn\", \"title\", \"subTitle\", \"author\", \"publish_date\", \"publisher\", \"pages\", \"description\", \"website\"]",
+							"                }",
+							"            }",
+							"        },",
+							"        \"required\": [\"books\"]",
+							"    };",
+							"    pm.expect(pm.response.json()).to.have.jsonSchema(schema);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"isbn\": \"{{fourth_isbn}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/BookStore/v1/Books/{{first_isbn}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books",
+						"{{first_isbn}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[10]update book by isbn",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"isbn\": \"{{fourth_isbn}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Books/{{first_isbn}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books",
+								"{{first_isbn}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:30:26 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1777"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"6f1-FWgBnJm7EZXlhGLiNzyOQNJJ2dU\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": \"474232fb-e613-49fd-8ab0-9aa8cfb5dcb9\",\n    \"username\": \"TeamNumpy020**\",\n    \"books\": [\n        {\n            \"isbn\": \"9781449337711\",\n            \"title\": \"Designing Evolvable Web APIs with ASP.NET\",\n            \"subTitle\": \"Harnessing the Power of the Web\",\n            \"author\": \"Glenn Block et al.\",\n            \"publish_date\": \"2020-06-04T09:12:43.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 238,\n            \"description\": \"Design and build Web APIs for a broad range of clients—including browsers and mobile devices—that can adapt to change over time. This practical, hands-on guide takes you through the theory and tools you need to build evolvable HTTP services with Microsoft\",\n            \"website\": \"http://chimera.labs.oreilly.com/books/1234000001708/index.html\"\n        },\n        {\n            \"isbn\": \"9781449331818\",\n            \"title\": \"Learning JavaScript Design Patterns\",\n            \"subTitle\": \"A JavaScript and jQuery Developer's Guide\",\n            \"author\": \"Addy Osmani\",\n            \"publish_date\": \"2020-06-04T09:11:40.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 254,\n            \"description\": \"With Learning JavaScript Design Patterns, you'll learn how to write beautiful, structured, and maintainable JavaScript by applying classical and modern design patterns to the language. If you want to keep your code efficient, more manageable, and up-to-da\",\n            \"website\": \"http://www.addyosmani.com/resources/essentialjsdesignpatterns/book/\"\n        },\n        {\n            \"isbn\": \"9781449365035\",\n            \"title\": \"Speaking JavaScript\",\n            \"subTitle\": \"An In-Depth Guide for Programmers\",\n            \"author\": \"Axel Rauschmayer\",\n            \"publish_date\": \"2014-02-01T00:00:00.000Z\",\n            \"publisher\": \"O'Reilly Media\",\n            \"pages\": 460,\n            \"description\": \"Like it or not, JavaScript is everywhere these days-from browser to server to mobile-and now you, too, need to learn the language or dive deeper than you have. This concise book guides you into and through JavaScript, written by a veteran programmer who o\",\n            \"website\": \"http://speakingjs.com/\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "[12]delete book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"// Validate the status code",
+							"pm.test('Status code is 204', () => {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"isbn\": \"{{second_isbn}}\",\n  \"userId\": \"{{userId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/BookStore/v1/Book",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Book"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[12]delete book",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"{{second_isbn}}\",\n  \"userId\": \"{{userId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Book",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Book"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:31:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"76-M6BR7U+kDKXq5cbTR87Vi3+owgQ\""
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "[11]Delete Multiple book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"// Validate the status code",
+							"pm.test('Status code is 204', () => {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/BookStore/v1/Books?UserId={{userId}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					],
+					"query": [
+						{
+							"key": "UserId",
+							"value": "{{userId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[11]Delete Multiple book",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/BookStore/v1/Books?UserId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"BookStore",
+								"v1",
+								"Books"
+							],
+							"query": [
+								{
+									"key": "UserId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:32:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"60-wa3udVLECJvwGuK9TmHMYX2YImk\""
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "[13]delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 204\", () => {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic VGVhbU51bXB5NTpzZGV0TnVtcHlAMDU="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlYW1OdW1weTUiLCJwYXNzd29yZCI6InNkZXROdW1weUAwNSIsImlhdCI6MTc0MTYxODA5Nn0.PmFSmQ7q8vOG33qEHQeIs2gvWXWNjvILYk4AHykIoj0"
+					}
+				],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/User/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[13]delete user",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "Basic VGVhbU51bXB5NTpzZGV0TnVtcHlAMDU="
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlYW1OdW1weTUiLCJwYXNzd29yZCI6InNkZXROdW1weUAwNSIsImlhdCI6MTc0MTYxODA5Nn0.PmFSmQ7q8vOG33qEHQeIs2gvWXWNjvILYk4AHykIoj0"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/Account/v1/User/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Account",
+								"v1",
+								"User",
+								"{{userId}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.17.10 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 17 Mar 2025 20:32:27 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"58-Delyi3CfVqYEx4cUHAhi2EStqX0\""
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"",
+					"pm.test(\"Content-Type is application/json (if present)\", function () {",
+					"    const contentType = pm.response.headers.get('Content-Type');",
+					"    ",
+					"    // Only check Content-Type if it's present",
+					"    if (contentType) {",
+					"        pm.expect(contentType).to.include('application/json');",
+					"    } else {",
+					"        console.log(\"Content-Type header is not present (expected for 204 No Content)\");",
+					"    }",
+					"});",
+					"",
+					"pm.test(\"Response header has Connection\", function () {",
+					"    pm.expect(pm.response.headers.has(\"Connection\")).to.be.true;",
+					" });   ",
+					"pm.test(\"Response header has Server\", function () {",
+					"    pm.expect(pm.response.headers.has(\"Server\")).to.be.true;",
+					"});",
+					"",
+					"pm.test(\"Response header has X-Powered-By\", function () {",
+					"    pm.expect(pm.response.headers.get(\"X-Powered-By\")).to.equal(\"Express\");",
+					"});",
+					"pm.test(\"Response header has ETag\", function () {",
+					"    pm.expect(pm.response.headers.has(\"ETag\")).to.be.true;",
+					"});",
+					"",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "requestPayload",
+			"value": ""
+		}
+	]
+}
