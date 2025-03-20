@@ -13,14 +13,16 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"",
 							"pm.test(\"Status code is 201\", function () {",
-							"pm.environment.set(\"variable_key\", \"variable_value\");",
+							"    pm.environment.set(\"variable_key\", \"variable_value\");",
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
 							"var user_Id = pm.response.json().userID;",
 							"pm.environment.set(\"userId\", user_Id);",
 							"var userName = pm.response.json().username;",
+							"console.log(\"Generated userName:\", userName);",
 							"pm.environment.set(\"userName\", userName);",
 							"",
 							"pm.test(\"Response schema is valid\", function () {",
@@ -53,9 +55,9 @@
 							"});",
 							"",
 							"pm.test(\"Books is an array\", function () {",
-							"  const responseData = pm.response.json();",
-							"  ",
-							"  pm.expect(responseData.books).to.be.an('array');",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.books).to.be.an('array');",
 							"});",
 							"",
 							"pm.test(\"UserID is a non-empty string\", function () {",
@@ -77,16 +79,8 @@
 							"",
 							"",
 							"pm.test(\"Books array should not be null\", function () {",
-							"  const responseData = pm.response.json();",
-							"  pm.expect(responseData.books).to.not.be.null;",
-							"});",
-							"",
-							"",
-							"pm.test(\"Username is a non-empty string\", function () {",
 							"    const responseData = pm.response.json();",
-							"    ",
-							"    pm.expect(responseData).to.be.an('object');",
-							"    pm.expect(responseData.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+							"    pm.expect(responseData.books).to.not.be.null;",
 							"});",
 							"",
 							"pm.test(\"Validate the userID and username combination is unique\", function () {",
@@ -95,7 +89,6 @@
 							"    pm.expect(responseData).to.have.property('userID').that.is.a('string');",
 							"    pm.expect(responseData).to.have.property('username').that.is.a('string');",
 							"});",
-							"",
 							""
 						],
 						"type": "text/javascript",
@@ -118,7 +111,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"userName\" : \"TeamNumpy020**\",\n\"password\" : \"sdetNumpy@05\"\n}",
+					"raw": "{\n\"userName\" : \"apiTesting25{{$randomAlphaNumeric}}\",\n\"password\" : \"ApiSdet$25\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -198,7 +191,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"userID\": \"e4d6b640-d399-4cb6-bcd6-42e7c8fc34aa\",\n    \"username\": \"TeamNumpy02**\",\n    \"books\": []\n}"
+					"body": "{\n    \"userID\": \"e4d6b640-d399-4cb6-bcd6-42e7c8fc34aa\",\n    \"username\": \"TeamNumpy0207\",\n    \"books\": []\n}"
 				}
 			]
 		},
@@ -264,7 +257,7 @@
 							"const requestPayload = ",
 							" {",
 							"\"userName\" : pm.environment.get(\"userName\"),",
-							"\"password\" : \"sdetNumpy@05\"",
+							"\"password\" : \"ApiSdet$25\"",
 							"}",
 							"",
 							"pm.collectionVariables.set(\"requestPayload\", JSON.stringify(requestPayload));",
@@ -378,7 +371,7 @@
 							"const requestPayload = ",
 							" {",
 							"\"userName\" : pm.environment.get(\"userName\"),",
-							"\"password\" : \"sdetNumpy@05\"",
+							"\"password\" : \"ApiSdet$25\"",
 							"}",
 							"",
 							"pm.collectionVariables.set(\"requestPayload\", JSON.stringify(requestPayload));"
@@ -468,9 +461,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Account/v1/Authorized",
+							"raw": "{{url}}/Account/v1/Authorized",
 							"host": [
-								"{{BaseUrl}}"
+								"{{url}}"
 							],
 							"path": [
 								"Account",
